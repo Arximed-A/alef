@@ -1,14 +1,14 @@
 <template>
   <header class="header">
     <div class="header__container">
-      <div class="header__logo">logo</div>
+      <span class="header__logo">logo</span>
       <!-- возможно подразумивается картинка  -->
       <a href="#" class="header__link">
         <img src="../assets/icons/user.svg" alt="user" class="header__img" />
       </a>
       <a href="#" class="header__link">
         <img
-          src="../assets/icons/favorite.svg"
+          src="../assets/icons/heartBlack.svg"
           alt="favorite"
           class="header__img"
         />
@@ -20,13 +20,13 @@
           class="header__img"
         />
       </a>
-      <!-- 
-      <a @click="showMenu" class="header__link menu">
+
+      <a @click="showMenu" class="menu">
         <span class="menu__line" :class="{ menu__active: activeMenu }"></span>
         <span class="menu__line" :class="{ menu__active: activeMenu }"></span>
         <span class="menu__line" :class="{ menu__active: activeMenu }"></span>
       </a>
-			 --></div>
+    </div>
   </header>
 </template>
 
@@ -43,6 +43,7 @@ export default {
       this.activeMenu = !this.activeMenu;
     },
   },
+  mounted() {},
 };
 </script>
 
@@ -52,8 +53,10 @@ export default {
   left: 0;
   right: 0;
   box-shadow: 0px 2px 4px 0px #0000001a;
+  z-index: 999;
   &__container {
     max-width: 1400px;
+    background-color: rgb(182, 181, 181);
     padding: 0px 5px;
     margin: 0px auto;
     height: 40px;
@@ -68,24 +71,21 @@ export default {
   }
   &__link {
     margin: 0px 24px 0px 0px;
-    height: 24px;
-    width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &:last-child {
+    &:last-of-type {
       margin: 0px 0px 0px 0px;
-      // ! РАЗОБРАТЬСЯ !!!!
     }
   }
   &__img {
-    height: 16px;
-    width: 16px;
+    height: 24px;
+    width: 24px;
   }
 }
+
 .menu {
   display: none;
   cursor: pointer;
+  height: 24px;
+  width: 24px;
   position: relative;
   &__line {
     position: absolute;

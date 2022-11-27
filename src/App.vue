@@ -12,9 +12,10 @@
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
   color: #333333;
+  letter-spacing: 0.04em;
 }
 a {
-  text-decoration: none;
+  text-decoration: underline;
   color: #333333;
 }
 </style>
