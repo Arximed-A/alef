@@ -23,7 +23,7 @@
         </a>
       </nav>
 
-      <a class="icon-menu" data-menu="icon">
+      <a class="icon-menu" data-menu="icon" @click="openMenu">
         <span
           class="icon-menu__line"
           :class="{ active: activeMenu }"
@@ -67,15 +67,19 @@ export default {
     };
   },
   methods: {
-    togleMenu(event) {
-      if (event.target.dataset.menu === "icon") {
-        //проверка нажатия на иконку меню
-        this.activeMenu = !this.activeMenu;
-      } else if (event.target.dataset.menu !== "menu" && this.activeMenu) {
-        //проверка нажатия на область вне меню
-        this.activeMenu = !this.activeMenu;
+    openMenu() {
+      window.addEventListener("click", this.closeMenu);
+    },
+    closeMenu(event) {
+      if (!this.activeMenu) {
+        this.activeMenu = true;
+      } else if (
+        event.target.dataset.menu === "icon" ||
+        event.target.dataset.menu !== "menu"
+      ) {
+        this.activeMenu = false;
+        window.removeEventListener("click", this.closeMenu);
       }
-      //решение мне не нравится, но рабочее
     },
     listenScrollY() {
       this.scrollY = window.pageYOffset;
@@ -84,7 +88,6 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.listenScrollY);
-    window.addEventListener("click", this.togleMenu);
   },
 };
 </script>
