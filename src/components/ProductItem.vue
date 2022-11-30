@@ -222,7 +222,6 @@ $md4: 374px;
 
 .images {
   position: relative;
-
   &__wrapper {
     display: flex;
     justify-content: center;
@@ -237,7 +236,7 @@ $md4: 374px;
   }
   &__list {
     position: absolute;
-    top: 23px;
+    top: 24px;
     left: 23px;
     display: flex;
     flex-direction: column;
@@ -253,6 +252,7 @@ $md4: 374px;
     @media (max-width: $md3) {
       width: 40px;
       height: 52px;
+      margin: 0px 0px 0px 0px;
     }
   }
   &__active {
