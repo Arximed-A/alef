@@ -1,31 +1,58 @@
 <template>
-  <header class="header">
+  <header class="header" :class="{ hide: scrollY }">
     <div class="header__container">
       <span class="header__logo">logo</span>
-      <!-- возможно подразумивается картинка  -->
-      <a href="#" class="header__link">
-        <img src="../assets/icons/user.svg" alt="user" class="header__img" />
-      </a>
-      <a href="#" class="header__link">
-        <img
-          src="../assets/icons/heartBlack.svg"
-          alt="favorite"
-          class="header__img"
-        />
-      </a>
-      <a href="#" class="header__link">
-        <img
-          src="../assets/icons/basket.svg"
-          alt="basket"
-          class="header__img"
-        />
+
+      <nav class="header__wrapper">
+        <a href="#" class="header__link">
+          <img src="../assets/icons/user.svg" alt="user" class="header__img" />
+        </a>
+        <a href="#" class="header__link">
+          <img
+            src="../assets/icons/heartBlack.svg"
+            alt="favorite"
+            class="header__img"
+          />
+        </a>
+        <a href="#" class="header__link">
+          <img
+            src="../assets/icons/basket.svg"
+            alt="basket"
+            class="header__img"
+          />
+        </a>
+      </nav>
+
+      <a class="icon-menu" data-menu="icon">
+        <span
+          class="icon-menu__line"
+          :class="{ active: activeMenu }"
+          data-menu="icon"
+        ></span>
+        <span
+          class="icon-menu__line"
+          :class="{ active: activeMenu }"
+          data-menu="icon"
+        ></span>
+        <span
+          class="icon-menu__line"
+          :class="{ active: activeMenu }"
+          data-menu="icon"
+        ></span>
       </a>
 
-      <a @click="showMenu" class="menu">
-        <span class="menu__line" :class="{ menu__active: activeMenu }"></span>
-        <span class="menu__line" :class="{ menu__active: activeMenu }"></span>
-        <span class="menu__line" :class="{ menu__active: activeMenu }"></span>
-      </a>
+      <menu class="header__menu menu" v-if="activeMenu" data-menu="menu">
+        <li class="menu__item">
+          <a href="#" class="menu__link">постельное белье</a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">одежда для дома</a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">Одежда для улицы</a>
+        </li>
+        <li class="menu__item"><a href="#" class="menu__link">Выход</a></li>
+      </menu>
     </div>
   </header>
 </template>
@@ -36,32 +63,56 @@ export default {
   data() {
     return {
       activeMenu: false,
+      scrollY: null,
     };
   },
   methods: {
-    showMenu() {
-      this.activeMenu = !this.activeMenu;
+    togleMenu(event) {
+      if (event.target.dataset.menu === "icon") {
+        //проверка нажатия на иконку меню
+        this.activeMenu = !this.activeMenu;
+      } else if (event.target.dataset.menu !== "menu" && this.activeMenu) {
+        //проверка нажатия на область вне меню
+        this.activeMenu = !this.activeMenu;
+      }
+      //решение мне не нравится, но рабочее
+    },
+    listenScrollY() {
+      this.scrollY = window.pageYOffset;
+      //присваиваем значение скрола
     },
   },
-  mounted() {},
+  mounted() {
+    window.addEventListener("scroll", this.listenScrollY);
+    window.addEventListener("click", this.togleMenu);
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+$md3: 500px;
+.hide {
+  top: -50px !important;
+}
 .header {
   position: fixed;
   left: 0;
   right: 0;
+  top: 0;
   box-shadow: 0px 2px 4px 0px #0000001a;
   z-index: 999;
+  transition: all 0.3s ease 0s;
   &__container {
+    height: 40px;
     max-width: 1400px;
-    background-color: rgb(182, 181, 181);
     padding: 0px 5px;
     margin: 0px auto;
-    height: 40px;
     display: flex;
     align-items: center;
+    @media (max-width: $md3) {
+      height: 30px;
+      padding: 0px 20px;
+    }
   }
   &__logo {
     font-weight: 700;
@@ -69,24 +120,59 @@ export default {
     font-size: 22px;
     flex: 1 1 auto;
   }
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 768px) {
+      margin: 0px 24px 0px 0px;
+    }
+  }
   &__link {
     margin: 0px 24px 0px 0px;
-    &:last-of-type {
+    &:last-child {
       margin: 0px 0px 0px 0px;
     }
+  }
+  &__menu {
   }
   &__img {
     height: 24px;
     width: 24px;
   }
 }
-
 .menu {
+  transition: all 0.3s ease 0s;
+  position: fixed;
+  background: white;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 277px;
+  padding: 80px 0px 43px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  &__item {
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0px 0px 30px 0px;
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+.icon-menu {
   display: none;
-  cursor: pointer;
   height: 24px;
   width: 24px;
   position: relative;
+  z-index: 3;
+  cursor: pointer;
+  @media (max-width: $md3) {
+    display: block;
+  }
   &__line {
     position: absolute;
     background-color: #333333;
@@ -102,16 +188,16 @@ export default {
       top: 17px;
     }
   }
-  &__active {
-    transform: scale(0);
-    &:first-child {
-      transform: rotate(-45deg);
-      top: 11px;
-    }
-    &:last-child {
-      transform: rotate(45deg);
-      top: 11px;
-    }
+}
+.active {
+  transform: scale(0);
+  &:first-child {
+    transform: rotate(-45deg);
+    top: 11px;
+  }
+  &:last-child {
+    transform: rotate(45deg);
+    top: 11px;
   }
 }
 </style>

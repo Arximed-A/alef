@@ -1,19 +1,11 @@
-# alef
+Для установки
 
-## Project setup
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+npm i
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Для запуска
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+npm run dev
+```

@@ -17,5 +17,11 @@
 a {
   text-decoration: underline;
   color: #333333;
+  &:hover {
+    text-decoration: none;
+  }
+}
+li {
+  list-style-type: none;
 }
 </style>
