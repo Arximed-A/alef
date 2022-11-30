@@ -23,7 +23,7 @@
         </a>
       </nav>
 
-      <a class="icon-menu" data-menu="icon">
+      <a class="icon-menu" data-menu="icon" @click="openMenu">
         <span
           class="icon-menu__line"
           :class="{ active: activeMenu }"
@@ -67,6 +67,10 @@ export default {
     };
   },
   methods: {
+    openMenu() {
+      this.activeMenu = true;
+      window.addEventListener("click", this.togleMenu);
+    },
     togleMenu(event) {
       if (event.target.dataset.menu === "icon") {
         //проверка нажатия на иконку меню
@@ -84,7 +88,7 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.listenScrollY);
-    window.addEventListener("click", this.togleMenu);
+    // window.addEventListener("click", this.togleMenu);
   },
 };
 </script>
