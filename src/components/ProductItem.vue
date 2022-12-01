@@ -72,7 +72,7 @@
             @click="showSizeList"
             :class="{ size__img_active: sizeList }"
           />
-          <!-- в всплывающем меню не стал реализовать закрытие вне области, т.к. считаю что моё решение по закрытии меню хоть и рабочее, но явно нужно сделать по другому. -->
+          <!-- в всплывающем меню не стал реализовать закрытие вне области, т.к. считаю что моё решение по закрытии меню хоть и рабочее, но явно нужно сделать по другому. Когда сделаю, запушу ветку дополнительную в мэйн-->
           <div class="size__wrapper" v-show="sizeList">
             <ul class="size__list" v-for="item of sizeItems" :key="item.index">
               <li class="size__item" @click="selectSize(item)">{{ item }}</li>
@@ -221,7 +221,6 @@ $md4: 374px;
 
 .images {
   position: relative;
-
   &__wrapper {
     display: flex;
     justify-content: center;
@@ -236,7 +235,7 @@ $md4: 374px;
   }
   &__list {
     position: absolute;
-    top: 23px;
+    top: 24px;
     left: 23px;
     display: flex;
     flex-direction: column;
@@ -252,6 +251,7 @@ $md4: 374px;
     @media (max-width: $md3) {
       width: 40px;
       height: 52px;
+      margin: 0px 0px 0px 0px;
     }
   }
   &__active {

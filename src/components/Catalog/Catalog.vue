@@ -38,7 +38,6 @@ export default {
 $md3: 500px;
 .catalog {
   padding: 0px 0px 130px 0px;
-
   &__title {
     height: 85px;
     display: flex;
@@ -76,7 +75,8 @@ $md3: 500px;
       max-height: 100%;
     }
     &__title {
-      height: 110px;
+      height: 109px;
+      margin: 0px 0px 13px 0px;
     }
     &__big-box {
       flex: 1 1 100%;
