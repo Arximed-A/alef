@@ -23,7 +23,7 @@
         </a>
       </nav>
 
-      <a class="icon-menu" data-menu="icon" @click="openMenu">
+      <a class="icon-menu" data-menu="icon" @click="startOpenMenu($event)">
         <span
           class="icon-menu__line"
           :class="{ active: activeMenu }"
@@ -67,10 +67,10 @@ export default {
     };
   },
   methods: {
-    openMenu() {
-      window.addEventListener("click", this.closeMenu);
+    startOpenMenu() {
+      window.addEventListener("click", this.togleMenu);
     },
-    closeMenu(event) {
+    togleMenu(event) {
       if (!this.activeMenu) {
         this.activeMenu = true;
       } else if (
@@ -127,7 +127,7 @@ $md3: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
-    @media (max-width: 768px) {
+    @media (max-width: $md3) {
       margin: 0px 24px 0px 0px;
     }
   }

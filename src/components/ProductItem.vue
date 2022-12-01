@@ -197,7 +197,6 @@ $md4: 374px;
     margin: 0px 16px 0px 0px;
     flex: 0 0 686px / 1390px * 100%;
     height: 878px;
-    background-color: grey;
   }
   &__about {
     flex: 0 0 686px / 1390px * 100%;
