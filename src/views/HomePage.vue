@@ -24,11 +24,6 @@ export default {
     Footer,
     Message,
   },
-  methods: {
-    test() {
-      console.log("2");
-    },
-  },
 };
 </script>
 
