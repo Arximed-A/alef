@@ -64,6 +64,7 @@
             v-model="size"
             @click="showSizeList"
             readonly
+            data-size="size"
           />
           <img
             src="../assets/icons/arrow.svg"
@@ -71,8 +72,8 @@
             class="size__img"
             @click="showSizeList"
             :class="{ size__img_active: sizeList }"
+            data-size="size"
           />
-          <!-- в всплывающем меню не стал реализовать закрытие вне области, т.к. считаю что моё решение по закрытии меню хоть и рабочее, но явно нужно сделать по другому. Когда сделаю, запушу ветку дополнительную в мэйн-->
           <div class="size__wrapper" v-show="sizeList">
             <ul class="size__list" v-for="item of sizeItems" :key="item.index">
               <li class="size__item" @click="selectSize(item)">{{ item }}</li>
@@ -145,11 +146,25 @@ export default {
       urlMainImg: 1,
       urlImg: "./../assets/img/pajamas/1.jpg",
       size: "Выбрать размер",
-      sizeList: false,
       sizeItems: null,
+      sizeList: false,
     };
   },
+  watch: {
+    sizeList() {
+      if (this.sizeList) {
+        document.addEventListener("click", this.clickOutsideSizeList);
+      } else {
+        document.removeEventListener("click", this.clickOutsideSizeList);
+      }
+    },
+  },
   methods: {
+    clickOutsideSizeList(event) {
+      if (event.target.dataset.size !== "size") {
+        this.sizeList = false;
+      }
+    },
     changePhoto(id) {
       this.urlMainImg = id;
     },

@@ -23,36 +23,35 @@
         </a>
       </nav>
 
-      <a
-        class="icon-menu"
-        @focus="openMenu"
-        tabindex="0"
-        @focusout="closeMenu"
-        ref="iconMenu"
-      >
-        <div class="icon-menu__wrapper">
-          <span class="icon-menu__line"></span>
-          <span class="icon-menu__line"></span>
-          <span class="icon-menu__line"></span>
-        </div>
-        <menu class="header__menu menu" v-if="activeMenu" data-menu="menu">
-          <div class="menu__wrapper" @click="closeMenu">
-            <span class="menu__line active"></span>
-            <span class="menu__line active"></span>
-            <span class="menu__line active"></span>
-          </div>
-          <li class="menu__item">
-            <a href="#" class="menu__link">постельное белье</a>
-          </li>
-          <li class="menu__item">
-            <a href="#" class="menu__link">одежда для дома</a>
-          </li>
-          <li class="menu__item">
-            <a href="#" class="menu__link">Одежда для улицы</a>
-          </li>
-          <li class="menu__item"><a href="#" class="menu__link">Выход</a></li>
-        </menu>
+      <a class="icon-menu" ref="iconMenu" @click="toggleMenu" data-menu="menu">
+        <span
+          class="icon-menu__line"
+          data-menu="menu"
+          :class="{ active: activeMenu }"
+        ></span>
+        <span
+          class="icon-menu__line"
+          data-menu="menu"
+          :class="{ active: activeMenu }"
+        ></span>
+        <span
+          class="icon-menu__line"
+          data-menu="menu"
+          :class="{ active: activeMenu }"
+        ></span>
       </a>
+      <menu class="header__menu menu" v-if="activeMenu" data-menu="menu">
+        <li class="menu__item">
+          <a href="#" class="menu__link">постельное белье</a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">одежда для дома</a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">Одежда для улицы</a>
+        </li>
+        <li class="menu__item"><a href="#" class="menu__link">Выход</a></li>
+      </menu>
     </div>
   </header>
 </template>
@@ -67,18 +66,27 @@ export default {
       focusMenu: true,
     };
   },
-
+  watch: {
+    activeMenu() {
+      if (this.activeMenu) {
+        document.addEventListener("click", this.clickOutsideMenu);
+      } else {
+        document.removeEventListener("click", this.clickOutsideMenu);
+      }
+    },
+  },
   methods: {
+    clickOutsideMenu(event) {
+      if (event.target.dataset.menu !== "menu") {
+        this.activeMenu = false;
+      }
+    },
     listenScrollY() {
       this.scrollY = window.pageYOffset;
       //присваиваем значение скрола
     },
-    openMenu() {
-      this.activeMenu = true;
-    },
-    closeMenu() {
-      this.activeMenu = false;
-      this.$refs.iconMenu.blur(); //снимаем фокус с меню
+    toggleMenu() {
+      this.activeMenu = !this.activeMenu;
     },
   },
   mounted() {
@@ -140,7 +148,6 @@ $md3: 500px;
   }
 }
 .menu {
-  transition: all 0.3s ease 0s;
   position: fixed;
   background: white;
   z-index: 2;
@@ -152,30 +159,6 @@ $md3: 500px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  &__wrapper {
-    cursor: pointer;
-    height: 24px;
-    width: 24px;
-    position: fixed;
-    right: 20px;
-    top: 3px;
-    z-index: 3;
-  }
-  &__line {
-    position: absolute;
-    background-color: #333333;
-    height: 1px;
-    width: 18px;
-    top: 11px;
-    left: 3px;
-    &:first-child {
-      top: 5px;
-    }
-    &:last-child {
-      top: 17px;
-    }
-  }
-
   &__item {
     font-size: 12px;
     text-transform: uppercase;
@@ -187,17 +170,14 @@ $md3: 500px;
 }
 .icon-menu {
   display: none;
-
+  height: 24px;
+  width: 24px;
+  position: relative;
+  z-index: 3;
+  cursor: pointer;
   @media (max-width: $md3) {
     display: block;
   }
-  &__wrapper {
-    position: relative;
-    height: 24px;
-    width: 24px;
-    cursor: pointer;
-  }
-
   &__line {
     position: absolute;
     background-color: #333333;
@@ -205,6 +185,7 @@ $md3: 500px;
     width: 18px;
     top: 11px;
     left: 3px;
+    transition: all 0.3s ease 0s;
     &:first-child {
       top: 5px;
     }
