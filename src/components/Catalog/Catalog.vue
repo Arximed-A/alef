@@ -57,16 +57,16 @@ $md3: 500px;
     position: relative;
     flex: 0 1 335px / 686px * 100%;
     max-height: 336px;
-    margin: 0px 0px 16px / 686px * 100% 0px;
-    &:nth-child(odd) {
-      margin: 0px 16px / 686px * 100% 16px / 686px * 100% 0px;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__wrapper {
     flex: 0 0 686px / 1390px * 100%;
-    margin: 0px 0px -16px 0px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
   }
   @media (max-width: $md3) {
     padding: 0px 0px 30px 0px;
@@ -84,10 +84,7 @@ $md3: 500px;
     }
     &__box {
       margin: 0px 0px 8px 0px;
-      flex: 1 0 183px / 375px * 100%;
-      &:nth-child(odd) {
-        margin: 0px 8px 8px 0px;
-      }
+      flex: 0 0 183px / 375px * 100%;
     }
     &__wrapper {
       flex: 1 1 100%;

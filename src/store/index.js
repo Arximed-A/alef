@@ -14,7 +14,7 @@ export default createStore({
     },
     quantity: 1,
     catalogItems: [2, 3, 4, 5],
-    showMessage: { status: false, addTo: null },
+    message: { status: false, text: null },
   },
   getters: {},
   mutations: {
@@ -24,9 +24,13 @@ export default createStore({
     decreaseQuantity(state) {
       state.quantity -= 1;
     },
-    showMessage(state, payload) {
-      state.showMessage.status = payload.status;
-      state.showMessage.addTo = payload.addTo;
+    createMessage(state, message) {
+      if (message.status) {
+        state.message.status = message.status;
+        state.message.text = message.text;
+      } else {
+        state.message.status = false;
+      }
     },
   },
   actions: {
@@ -37,13 +41,15 @@ export default createStore({
         commit("decreaseQuantity");
       }
     },
-    addProduct({ commit }, addTo) {
-      if (addTo === "basket") {
-        commit({ type: "showMessage", status: true, addTo });
-      } else if (addTo === "favorite") {
-        commit({ type: "showMessage", status: true, addTo });
+    showMessage({ commit }, elem) {
+      if (elem?.goal === "basket") {
+        commit({ type: "createMessage", status: true, text: elem.goal });
+      } else if (elem?.goal === "favorite") {
+        commit({ type: "createMessage", status: true, text: elem.goal });
+      } else if (elem?.goal === "text") {
+        commit({ type: "createMessage", status: true, text: elem.text });
       } else {
-        commit("showMessage", false);
+        commit("createMessage", false);
       }
     },
   },

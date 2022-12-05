@@ -96,6 +96,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$md2: 900px;
 $md3: 500px;
 .hide {
   top: -50px !important;
@@ -115,7 +116,7 @@ $md3: 500px;
     margin: 0px auto;
     display: flex;
     align-items: center;
-    @media (max-width: $md3) {
+    @media (max-width: $md2) {
       height: 30px;
       padding: 0px 20px;
     }
@@ -130,7 +131,7 @@ $md3: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
-    @media (max-width: $md3) {
+    @media (max-width: $md2) {
       margin: 0px 24px 0px 0px;
     }
   }
@@ -175,7 +176,7 @@ $md3: 500px;
   position: relative;
   z-index: 3;
   cursor: pointer;
-  @media (max-width: $md3) {
+  @media (max-width: $md2) {
     display: block;
   }
   &__line {

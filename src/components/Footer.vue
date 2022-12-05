@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "Footer",
   data() {
@@ -53,6 +54,8 @@ export default {
       const result = rule.test(String(email).toLowerCase()); //возращает истину, если проходит проверку
       if (result) {
         this.errorEmail = false;
+        this.email = "";
+        this.showMessage({ goal: "text", text: "Email успешно отправлен" });
       } else {
         this.errorEmail = true;
       }
@@ -61,6 +64,9 @@ export default {
       this.errorEmail = false;
       this.email = null;
     },
+    ...mapActions({
+      showMessage: "showMessage",
+    }),
   },
 };
 </script>

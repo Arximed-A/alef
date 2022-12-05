@@ -1,9 +1,16 @@
 <template>
   <section class="message" :class="{ active: status }">
-    товар <span>{{ name }}</span> в количестве
-    <span>{{ numStatic }}</span> единиц добавлен в
-    <span v-if="addTo === 'basket'">корзину</span>
-    <span v-else>избранное</span>
+    <span v-if="text === 'basket' || text === 'favorite'">
+      товар <span class="bold">{{ name }}</span>
+      <span v-if="text === 'basket'">
+        в количестве <span class="bold">{{ numStatic }}</span> единиц добавлен в
+        корзину</span
+      >
+      <span v-else> добавлен в избранное</span>
+    </span>
+    <span v-else>
+      {{ text }}
+    </span>
   </section>
 </template>
 
@@ -20,21 +27,21 @@ export default {
     status() {
       if (this.status) {
         this.numStatic = this.quantity; // если выводить количество напрямую, то во время появления окна можно менять количество
-        setTimeout(this.addProduct, 1000);
+        setTimeout(this.showMessage, 1500);
       }
     },
   },
   methods: {
     ...mapActions({
-      addProduct: "addProduct",
+      showMessage: "showMessage",
     }),
   },
   computed: {
     ...mapState({
       name: (state) => state.product.name,
       quantity: (state) => state.quantity,
-      status: (state) => state.showMessage.status,
-      addTo: (state) => state.showMessage.addTo,
+      status: (state) => state.message.status,
+      text: (state) => state.message.text,
     }),
   },
 };
@@ -55,9 +62,12 @@ export default {
   font-size: 20px;
   transition: all 0.3s ease 0s;
   span {
-    font-weight: 700;
     font-size: inherit;
   }
+}
+.bold {
+  font-weight: 700;
+  font-size: inherit;
 }
 .active {
   bottom: 0px;

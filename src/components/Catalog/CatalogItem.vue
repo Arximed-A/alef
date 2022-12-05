@@ -57,7 +57,8 @@ $md3: 500px;
   justify-content: space-between;
   &__img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    overflow: hidden;
     display: block;
   }
   &:hover {

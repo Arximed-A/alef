@@ -75,8 +75,15 @@
             data-size="size"
           />
           <div class="size__wrapper" v-show="sizeList">
-            <ul class="size__list" v-for="item of sizeItems" :key="item.index">
-              <li class="size__item" @click="selectSize(item)">{{ item }}</li>
+            <ul class="size__list">
+              <li
+                class="size__item"
+                v-for="item of sizeItems"
+                :key="item.index"
+                @click="selectSize(item)"
+              >
+                {{ item }}
+              </li>
             </ul>
           </div>
         </div>
@@ -91,12 +98,15 @@
             <button class="buy__change" @click="changeQuantity(0)">-</button>
           </div>
           <div class="buy__buttons">
-            <button class="buy__add btn" @click="addProduct('basket')">
+            <button
+              class="buy__add btn"
+              @click="showMessage({ goal: 'basket' })"
+            >
               Добавить в корзину
             </button>
             <button
               class="buy__add buy__favourite btn"
-              @click="addProduct('favorite')"
+              @click="showMessage({ goal: 'favorite' })"
             >
               <img
                 src="../assets/icons/heartWhite.svg"
@@ -177,7 +187,7 @@ export default {
     },
     ...mapActions({
       changeQuantity: "changeQuantity",
-      addProduct: "addProduct",
+      showMessage: "showMessage",
     }),
   },
   computed: {
@@ -378,6 +388,8 @@ $md4: 374px;
     width: 315px;
   }
   &__list {
+    height: 44px * 3;
+    overflow-y: scroll;
   }
   &__item {
     padding: 0px 0px 0px 10px;
